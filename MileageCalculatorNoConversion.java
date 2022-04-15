@@ -46,7 +46,8 @@ public class MileageCalculatorNoConversion extends Application {
     
   //  private RadioButton rbMPG = new RadioButton(defaultResult);
   //  private RadioButton rbKPL = new RadioButton(altResult);
-    private ComboBox<String> cbo = new ComboBox<>();
+    private ObservableList<String> buttons = FXCollections.observableArrayList(defaultResult, altResult);
+    private ComboBox<String> cbo = new ComboBox<>(buttons);
     private ToggleGroup tgConv = new ToggleGroup();
     
     private GridPane mainPane = new GridPane();
