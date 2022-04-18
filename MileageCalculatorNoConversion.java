@@ -30,6 +30,8 @@ public class MileageCalculatorNoConversion extends Application {
     private String altMileage = "Kilometers";
     private String altCapacity = "Liters";
     private String altResult = "L/100KM";
+	
+    private String [] comboButton = {defaultResult, altResult};
     
     // create UI components split by type
     private Button btnCalc = new Button("Calculate");
@@ -46,16 +48,14 @@ public class MileageCalculatorNoConversion extends Application {
     
   //  private RadioButton rbMPG = new RadioButton(defaultResult);
   //  private RadioButton rbKPL = new RadioButton(altResult);
-    private ObservableList<String> buttons = FXCollections.observableArrayList(defaultResult, altResult);
-    private ComboBox<String> cbo = new ComboBox<>(buttons);
-    private ToggleGroup tgConv = new ToggleGroup();
+    //private ToggleGroup tgConv = new ToggleGroup();
     
     private GridPane mainPane = new GridPane();
     
     public void start(Stage primaryStage) {   	
     	// set toggle group for RadioButtons
-    	rbMPG.setToggleGroup(tgConv);
-    	rbKPL.setToggleGroup(tgConv);
+    	//rbMPG.setToggleGroup(tgConv);
+    	//rbKPL.setToggleGroup(tgConv);
     	
         // set preferences for UI components
         tfDistance.setMaxWidth(txtWidth);
@@ -63,7 +63,11 @@ public class MileageCalculatorNoConversion extends Application {
         tfResult.setMaxWidth(txtWidth);
         tfResult.setEditable(false);
         rbMPG.setSelected(true);
-        
+	    
+         ObservableList<String> items
+        	= FXCollections.observableArrayList(comboButton);
+        	cbo.getItems().addAll(items);
+	    
         // create a main grid pane to hold items
         mainPane.setPadding(new Insets(10.0));
         mainPane.setHgap(txtWidth/2.0);
