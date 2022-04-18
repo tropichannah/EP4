@@ -9,13 +9,14 @@
 package ch16;
 
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -62,9 +63,11 @@ public class MileageCalculatorNoConversion extends Application {
         tfCapacity.setMaxWidth(txtWidth);
         tfResult.setMaxWidth(txtWidth);
         tfResult.setEditable(false);
-        rbMPG.setSelected(true);
+        //rbMPG.setSelected(true);
+	changeLabels(0); 
+	cbo.setValue("MPG");   
 	    
-         ObservableList<String> items
+        ObservableList<String> items
         	= FXCollections.observableArrayList(comboButton);
         	cbo.getItems().addAll(items);
 	    
@@ -72,11 +75,13 @@ public class MileageCalculatorNoConversion extends Application {
         mainPane.setPadding(new Insets(10.0));
         mainPane.setHgap(txtWidth/2.0);
         mainPane.setVgap(txtWidth/12.0);
+	    
+	
         
         // add items to mainPane
         mainPane.add(lblEffType, 0, 0);
-        mainPane.add(rbMPG, 0, 1);
-        mainPane.add(rbKPL, 1, 1);
+     //   mainPane.add(rbMPG, 0, 1);
+        mainPane.add(cbo, 1, 1);
         mainPane.add(lblDistance, 0, 2);
         mainPane.add(tfDistance, 1, 2);
         mainPane.add(lblCapacity, 0, 3);
@@ -87,12 +92,12 @@ public class MileageCalculatorNoConversion extends Application {
         mainPane.add(btnCalc, 1, 5);
         
         // register action handlers
-        btnCalc.setOnAction(e -> calcMileage());
-        tfDistance.setOnAction(e -> calcMileage());
-        tfCapacity.setOnAction(e -> calcMileage());
-        tfResult.setOnAction(e -> calcMileage());
-        rbKPL.setOnAction(e -> changeLabels());
-        rbMPG.setOnAction(e -> changeLabels());     
+     	btnCalc.setOnAction(e -> calcMileage(items.indexOf(cbo.getValue())));
+        tfDistance.setOnAction(e -> calcMileage(items.indexOf(cbo.getValue())));
+        tfCapacity.setOnAction(e -> calcMileage(items.indexOf(cbo.getValue())));
+        tfResult.setOnAction(e -> calcMileage(items.indexOf(cbo.getValue())));
+        cbo.setOnAction(e -> changeLabels(items.indexOf(cbo.getValue())));
+       // rbMPG.setOnAction(e -> changeLabels());     
         btnReset.setOnAction(e -> resetForm());
         
         // create a scene and place it in the stage
@@ -112,9 +117,9 @@ public class MileageCalculatorNoConversion extends Application {
      * This needs to be separate to avoid converting when
      * the conversion is not necessary
      */
-    private void changeLabels() {
+    private void changeLabels(int index) {
     	// distinguish between L/100KM and MPG
-    	if (rbKPL.isSelected() && lblCapacity.getText().equals(defaultCapacity)) {
+    	if (comboButton[index].equals(altResult) ) {
         	// update labels
         	lblCapacity.setText(altCapacity);
         	lblDistance.setText(altMileage);
@@ -130,7 +135,7 @@ public class MileageCalculatorNoConversion extends Application {
     /**
      * Calculate expenses based on entered figures
      */
-    private void calcMileage() {       
+    private void calcMileage(int index) {       
     	// set default values
         double distance = 0.0, capacity = 0.0;
         
@@ -143,7 +148,7 @@ public class MileageCalculatorNoConversion extends Application {
 
         // check for type of calculation
         double result = 0.0;
-        if (rbKPL.isSelected()) {
+       if (comboButton[index].equals(altResult))  {
         	// liters / 100KM
         	result = (distance != 0) ? capacity/(distance/100.0) : 0;
         } else {
@@ -160,7 +165,7 @@ public class MileageCalculatorNoConversion extends Application {
      */
     private void resetForm() {
         // reset all form fields
-    	rbMPG.setSelected(true);
+    	//rbMPG.setSelected(true);
         tfDistance.setText(defaultEntry);
         tfCapacity.setText(defaultEntry);
         tfResult.setText(defaultCalc);
