@@ -74,8 +74,9 @@ public class MileageCalculatorNoConversion extends Application {
         
         
         
-        cbo.setValue("MPG");
-        
+        //cbo.setValue("MPG");
+	cbo.getSelectionModel().selectFirst(); 
+	    
         ObservableList<String> items
         = FXCollections.observableArrayList(comboButton);
         cbo.getItems().addAll(items);
@@ -94,12 +95,11 @@ public class MileageCalculatorNoConversion extends Application {
         mainPane.add(btnCalc, 1, 5);
         
         // register action handlers
-        btnCalc.setOnAction(e -> calcMileage(items.indexOf(cbo.getValue())));
-        tfDistance.setOnAction(e -> calcMileage(items.indexOf(cbo.getValue())));
-        tfCapacity.setOnAction(e -> calcMileage(items.indexOf(cbo.getValue())));
-        tfResult.setOnAction(e -> calcMileage(items.indexOf(cbo.getValue())));
-        cbo.setOnAction(e -> changeLabels(items.indexOf(cbo.getValue())));
-       // rbMPG.setOnAction(e -> changeLabels());     
+        btnCalc.setOnAction(e -> calcMileage());
+        tfDistance.setOnAction(e -> calcMileage());
+        tfCapacity.setOnAction(e -> calcMileage());
+        tfResult.setOnAction(e -> calcMileage());
+        cbo.setOnAction(e -> changeLabels());    
         btnReset.setOnAction(e -> resetForm());
         
         // create a scene and place it in the stage
@@ -174,7 +174,7 @@ public class MileageCalculatorNoConversion extends Application {
 
         // check for type of calculation
         double result = 0.0;
-        if (comboButton[index].equals(altResult)) {
+        if (cbo.getValue().equals(altResult)) {
         	// liters / 100KM
         	result = (distance != 0) ? capacity/(distance/100.0) : 0;
         } else {
