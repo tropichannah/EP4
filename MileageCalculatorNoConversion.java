@@ -32,7 +32,7 @@ public class MileageCalculatorNoConversion extends Application {
     private String altCapacity = "Liters";
     private String altResult = "L/100KM";
     
-    private String [] comboButton = {defaultResult, altResult};
+    //private String [] comboButton = {defaultResult, altResult};
     
     // create UI components split by type
     private Button btnCalc = new Button("Calculate");
@@ -50,7 +50,7 @@ public class MileageCalculatorNoConversion extends Application {
    // private RadioButton rbMPG = new RadioButton(defaultResult);
   //  private RadioButton rbKPL = new RadioButton(altResult);
     
-    private ComboBox<String> cbo = new ComboBox<>();
+    private ComboBox<String> cbo = new ComboBox<>(items);
  //   private ToggleGroup tgConv = new ToggleGroup();
     
     private GridPane mainPane = new GridPane();
@@ -133,7 +133,31 @@ public class MileageCalculatorNoConversion extends Application {
         	lblResult.setText(defaultResult);
         }
     }
-    
+	
+	 //convert
+    private void convert() {
+    	double distance = 0.0, capacity = 0.0;
+    	
+    	 if (tfCapacity.getText() != null && !tfCapacity.getText().isEmpty()
+         		&& tfDistance.getText() != null && !tfDistance.getText().isEmpty()) {
+         	distance = Double.parseDouble(tfDistance.getText());
+             capacity = Double.parseDouble(tfCapacity.getText());
+         }
+    	 if(cbo.getValue().equals(altResult)) {
+    		 distance *= 1.60934;
+    		 capacity *= 3.78541;
+    		 tfDistance.setText(String.format("%.2f", distance));
+    		 tfCapacity.setText(String.format("%.2f", capacity));
+    		 calcMileage();
+    	 }else {
+    		 distance *= 0.621371;
+    		 capacity *= 0.264172;
+    		 tfDistance.setText(String.format("%.2f", distance));
+    		 tfCapacity.setText(String.format("%.2f", capacity));
+    		 calcMileage();
+    	 }
+    	 
+    }    
     /**
      * Calculate expenses based on entered figures
      */
