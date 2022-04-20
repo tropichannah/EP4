@@ -1,5 +1,5 @@
 /**
- * File: csci1302/ch16/MileageCalculator.java
+* File: csci1302/ch16/MileageCalculator.java
  * Package: ch16
  * @author Tierra Anthony Hannah Hammonds 
  * Created on: Apr 12, 2022
@@ -7,7 +7,7 @@
  * Description:  Updating Mileage Calc tasks with Combobox and updated handlers 
  */
 package ch16;
-
+//https://github.com/tropichannah/EP4.git
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -31,7 +31,7 @@ public class MileageCalculatorNoConversion extends Application {
     private String altMileage = "Kilometers";
     private String altCapacity = "Liters";
     private String altResult = "L/100KM";
-	
+    
     private String [] comboButton = {defaultResult, altResult};
     
     // create UI components split by type
@@ -47,36 +47,38 @@ public class MileageCalculatorNoConversion extends Application {
     private TextField tfCapacity = new TextField(defaultEntry);
     private TextField tfResult = new TextField(defaultCalc);
     
-  //  private RadioButton rbMPG = new RadioButton(defaultResult);
+   // private RadioButton rbMPG = new RadioButton(defaultResult);
   //  private RadioButton rbKPL = new RadioButton(altResult);
-    //private ToggleGroup tgConv = new ToggleGroup();
+    
+    private ComboBox<String> cbo = new ComboBox<>();
+ //   private ToggleGroup tgConv = new ToggleGroup();
     
     private GridPane mainPane = new GridPane();
-    
+    @Override
     public void start(Stage primaryStage) {   	
     	// set toggle group for RadioButtons
-    	//rbMPG.setToggleGroup(tgConv);
-    	//rbKPL.setToggleGroup(tgConv);
+    //	rbMPG.setToggleGroup(tgConv);
+   // 	rbKPL.setToggleGroup(tgConv);
     	
         // set preferences for UI components
         tfDistance.setMaxWidth(txtWidth);
         tfCapacity.setMaxWidth(txtWidth);
         tfResult.setMaxWidth(txtWidth);
         tfResult.setEditable(false);
-        //rbMPG.setSelected(true);
-	changeLabels(0); 
-	cbo.setValue("MPG");   
-	    
-        ObservableList<String> items
-        	= FXCollections.observableArrayList(comboButton);
-        	cbo.getItems().addAll(items);
-	    
+ //       rbMPG.setSelected(true);
+        changeLabels(0);
         // create a main grid pane to hold items
         mainPane.setPadding(new Insets(10.0));
         mainPane.setHgap(txtWidth/2.0);
         mainPane.setVgap(txtWidth/12.0);
-	    
-	
+        
+        
+        
+        cbo.setValue("MPG");
+        
+        ObservableList<String> items
+        = FXCollections.observableArrayList(comboButton);
+        cbo.getItems().addAll(items);
         
         // add items to mainPane
         mainPane.add(lblEffType, 0, 0);
@@ -92,7 +94,7 @@ public class MileageCalculatorNoConversion extends Application {
         mainPane.add(btnCalc, 1, 5);
         
         // register action handlers
-     	btnCalc.setOnAction(e -> calcMileage(items.indexOf(cbo.getValue())));
+        btnCalc.setOnAction(e -> calcMileage(items.indexOf(cbo.getValue())));
         tfDistance.setOnAction(e -> calcMileage(items.indexOf(cbo.getValue())));
         tfCapacity.setOnAction(e -> calcMileage(items.indexOf(cbo.getValue())));
         tfResult.setOnAction(e -> calcMileage(items.indexOf(cbo.getValue())));
@@ -148,7 +150,7 @@ public class MileageCalculatorNoConversion extends Application {
 
         // check for type of calculation
         double result = 0.0;
-       if (comboButton[index].equals(altResult))  {
+        if (comboButton[index].equals(altResult)) {
         	// liters / 100KM
         	result = (distance != 0) ? capacity/(distance/100.0) : 0;
         } else {
