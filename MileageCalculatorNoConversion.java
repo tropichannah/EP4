@@ -101,7 +101,8 @@ public class MileageCalculatorNoConversion extends Application {
         tfResult.setOnAction(e -> calcMileage());
         cbo.setOnAction(e -> changeLabels());    
         btnReset.setOnAction(e -> resetForm());
-        
+	cbo.valueProperty().addListener(ov -> convert());
+	    
         // create a scene and place it in the stage
         Scene scene = new Scene(mainPane); 
         
